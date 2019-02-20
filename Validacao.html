@@ -1,0 +1,61 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+
+  <!--
+    Your HTML content here
+  -->
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+  <!-- ngMessages -->
+  <script src="https://unpkg.com/angular-messages@1.7.7/angular-messages.min.js"></script>
+
+
+  <!-- Your application bootstrap  -->
+  <script type="text/javascript">
+    /**
+     * You must include the dependency on 'ngMaterial'
+     */
+    angular.module('BlankApp', ['ngMaterial', 'ngMessages']);
+  </script>
+
+
+</head>
+<body ng-app="BlankApp" ng-cloak>
+
+  <form name="exampleForm" class="elegant-aero">
+   <label>Primeiro Nome:</label>
+   <input type="text" name="userFirstName" ng-model="firstName" required />
+   <div ng-messages="exampleForm.userFirstName.$error">
+     <div ng-message="required">This field is required</div>
+   </div>
+
+   <label>Segundo Nome:</label>
+   <input type="text" name="userLastName" ng-model="lastName" required />
+   <div ng-messages="exampleForm.userLastName.$error">
+     <div ng-message="required">This field is required</div>
+   </div>
+
+   <label>Email:</label>
+   <input type="email" name="userEmail" ng-model="email" required />
+   <div ng-messages="exampleForm.userEmail.$error">
+     <div ng-message="required">This field is required</div>
+     <div ng-message="email">Your email address is invalid</div>
+   </div>
+
+  
+
+
+
+</body>
+</html>
