@@ -1,0 +1,180 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+
+  <!--
+    Your HTML content here
+  -->
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+  <!-- ngMessages -->
+  <script src="https://unpkg.com/angular-messages@1.7.7/angular-messages.min.js"></script>
+
+  <!-- Your application bootstrap  -->
+  <script type="text/javascript">
+    /**
+     * You must include the dependency on 'ngMaterial'
+     */
+    let app = angular.module('BlankApp', ['ngMaterial', 'ngMessages']);
+
+
+    var compareTo = function() {
+      return {
+        require: "ngModel",
+        scope: {
+          otherModelValue: "=compareTo"
+        },
+        link: function(scope, element, attributes, ngModel) {
+
+          ngModel.$validators.compareTo = function(modelValue) {
+            validate = modelValue == scope.otherModelValue
+            return validate;
+          };
+
+          scope.$watch("otherModelValue", function() {
+            ngModel.$validate();
+          });
+        }
+      };
+    };
+
+    app.directive("compareTo", compareTo);
+  </script>
+
+
+</head>
+<body ng-app="BlankApp" ng-cloak>
+
+
+  <div layout="column" ng-cloak>
+
+    <md-content layout-padding>
+      <form name="projectForm" novalidate>
+
+        <div layout="row">
+          <md-input-container flex="50">
+            <label>Client Name</label>
+            <input required type="text" name="clientName" ng-model="project.clientName">
+            <div ng-messages="projectForm.clientName.$error">
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container flex="50">
+            <label>Project Type</label>
+            <md-select name="type" ng-model="project.type" required>
+              <md-option value="app">Application</md-option>
+              <md-option value="web">Website</md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+
+        <md-input-container class="md-block">
+          <label>Client Email</label>
+          <input required type="email" name="clientEmail" ng-model="project.clientEmail"
+                 minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+
+          <div ng-messages="projectForm.clientEmail.$error" role="alert">
+            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+              Your email must be between 10 and 100 characters long and look like an e-mail address.
+            </div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Hourly Rate (USD)</label>
+          <input required type="number" step="any" name="rate" ng-model="project.rate" min="800"
+                 max="4999" ng-pattern="/^1234$/" />
+
+          <div ng-messages="projectForm.rate.$error" multiple md-auto-hide="false">
+            <div ng-message="required">
+              You've got to charge something! You can't just <b>give away</b> a Missile Defense
+              System.
+            </div>
+
+            <div ng-message="min">
+              You should charge at least $800 an hour. This job is a big deal... if you mess up,
+              everyone dies!
+            </div>
+
+            <div ng-message="pattern">
+              You should charge exactly $1,234.
+            </div>
+
+            <div ng-message="max">
+              {{projectForm.rate.$viewValue | currency:"$":0}} an hour? That's a little ridiculous. I
+              doubt even Bill Clinton could afford that.
+            </div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Senha</label>
+          <input required type="password" name="Senha" ng-model="project.Senha">
+          <div ng-messages="projectForm.Senha.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Confirmar Senha</label>
+          <input required type="password" name="ReSenha" ng-model="project.ReSenha" required compare-to="project.Senha">
+          <div ng-messages="projectForm.ReSenha.$error" >
+            <div ng-message="required">This is required.</div>
+            <div ng-message="compareTo" >As senhas tem que ser iguais</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <md-checkbox name="tos" ng-model="project.tos" required>
+            I accept the terms of service.
+          </md-checkbox>
+          <div ng-messages="projectForm.tos.$error" multiple md-auto-hide="false">
+            <div ng-message="required">
+              You must accept the terms of service before you can proceed.
+            </div>
+          </div>
+        </md-input-container>
+
+
+        <md-input-container class="md-block">
+          <md-switch class="md-primary" name="special" ng-model="project.special" required>
+            Enable special options.
+          </md-switch>
+          <div ng-messages="projectForm.special.$error" multiple>
+            <div ng-message="required">
+              You must enable all special options before you can proceed.
+            </div>
+          </div>
+        </md-input-container>
+        <div>
+          <md-button type="submit">Submit</md-button>
+        </div>
+
+        <p style="font-size:.8em; width: 100%; text-align: center;">
+          Make sure to include <a href="https://docs.angularjs.org/api/ngMessages" target="_blank">ngMessages</a> module when using ng-message markup.
+        </p>
+      </form>
+    </md-content>
+
+  </div>
+
+
+
+</body>
+</html>
+<!--
+Contrui um projeto, usei o AngularJS Material, para fazer os campos do formulario e a validacao de cada um dos campos
+Se os campos estiverem vazios ele da requerido, no caso das senhas, usei a função CompareTo para comparar dois campos do formulario
+Usei ng-message para fazer as validaçoes
+-->
